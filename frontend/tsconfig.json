@@ -27,9 +27,10 @@
       "@/components/*": ["./components/*"],
       "@/api/*": ["./lib/api/*"],
       "@/interfaces/*": ["./lib/interfaces/*"],
-      "@/types/*": ["./lib/types/*"],
       "@/shadcn/*": ["./components/ui/shadcn/*"],
-      "@/styles/*": ["./styles/*"]
+      "@/styles/*": ["./styles/*"],
+      "@/types/*": ["./lib/types/*"],
+      "@/utils/*": ["./lib/utils/*"],
     }
   },
   "include": [

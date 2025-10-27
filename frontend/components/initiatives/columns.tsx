@@ -1,0 +1,54 @@
+'use client';
+
+import { Pencil, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import type { InitiativeInterface } from '@/interfaces/initiatives';
+import type { CellContext, ColumnDef } from '@tanstack/react-table';
+import { Button } from '@/shadcn/button';
+import dateFormatter from '@/utils/date';
+
+export const columns: ColumnDef<InitiativeInterface>[] = [
+    {
+        accessorKey: 'name',
+        header: 'Name',
+    },
+    {
+        accessorKey: 'startDate',
+        header: 'Start Date',
+        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => <div>{ dateFormatter(row.getValue('startDate')) }</div>,
+    },
+    {
+        accessorKey: 'endDate',
+        header: 'End Date',
+        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => <div>{ dateFormatter(row.getValue('endDate')) }</div>,
+    },
+    {
+        accessorKey: 'status',
+        header: 'Status',
+    },
+    {
+        accessorKey: 'progress',
+        header: 'Progress',
+        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => <div>{ row.getValue('progress') }%</div>,
+    },
+    {
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }: CellContext<InitiativeInterface, unknown>): React.JSX.Element => {
+            const initiative = row.original;
+
+            return (
+                <div className="flex gap-2">
+                    <Link href={ `/${initiative.id}` }>
+                        <Button variant="default">
+                            <Pencil />
+                        </Button>
+                    </Link>
+                    <Button variant="destructive">
+                        <Trash2 />
+                    </Button>
+                </div>
+            );
+        },
+    },
+];
