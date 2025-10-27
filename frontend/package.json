@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint app --ext .ts,.tsx",
-    "lint:fix": "eslint app --ext .ts,.tsx --fix"
+    "lint": "eslint app lib --ext .ts,.tsx",
+    "lint:fix": "eslint app lib --ext .ts,.tsx --fix"
   },
   "dependencies": {
     "next": "16.0.0",
