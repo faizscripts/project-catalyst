@@ -1,0 +1,13 @@
+@use "@/styles/base/variables";
+@use "@/styles/base/mixins";
+
+.wrapper {
+  @include mixins.flex-center;
+  padding: variables.$space-xs;
+  background-color: variables.$color-black;
+}
+
+.text {
+  color: variables.$color-white;
+  font-size: variables.$text-xs;
+}
