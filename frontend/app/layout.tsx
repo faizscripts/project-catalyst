@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-import { Fredoka } from "next/font/google";
+import { Fredoka } from 'next/font/google';
+import type { Metadata } from 'next';
 import '@/styles/main.scss';
 
 const fredoka = Fredoka({
-    subsets: ["latin"],
-    variable: "--font-fredoka",
-    display: "swap",
+    subsets: ['latin'],
+    variable: '--font-fredoka',
+    display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Project Catalyst",
+  title: 'Project Catalyst',
   description: "A tool for tracking a company's initiatives",
   icons: {
       icon: [
@@ -28,12 +28,12 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): React.JSX.Element {
   return (
     <html lang="en">
       <body
-        className={`${fredoka.variable} antialiased`}>
-        {children}
+        className={ `${fredoka.variable} antialiased` }>
+        { children }
       </body>
     </html>
   );
