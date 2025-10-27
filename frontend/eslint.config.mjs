@@ -14,7 +14,7 @@ const eslintConfig = [
       'out/**',
       'build/**',
       'next-env.d.ts',
-      'src/components/ui/shadcn/**',
+      './components/ui/shadcn/**',
     ],
   },
   {
