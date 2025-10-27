@@ -1,6 +1,7 @@
 import { Fredoka } from 'next/font/google';
 import type { Metadata } from 'next';
 import '@/styles/main.scss';
+import Footer from '@/components/layout/footer';
 
 const fredoka = Fredoka({
     subsets: ['latin'],
@@ -31,9 +32,13 @@ export default function RootLayout({
 }>): React.JSX.Element {
   return (
     <html lang="en">
-      <body
-        className={ `${fredoka.variable} antialiased` }>
-        { children }
+      <body className={ `${fredoka.variable} antialiased` }>
+          <div className="site-container">
+              <div className="full-height">
+                  { children }
+              </div>
+              <Footer />
+          </div>
       </body>
     </html>
   );
