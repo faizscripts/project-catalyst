@@ -5,7 +5,7 @@ import { UpdateInitiativeDto } from './dto/update-initiative.dto';
 
 @Injectable()
 export class InitiativesService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private readonly prisma: PrismaService) {}
 
     async create(data: CreateInitiativeDto) {
         if (new Date(data.endDate) <= new Date(data.startDate)) {

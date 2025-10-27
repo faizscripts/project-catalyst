@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { InitiativesModule } from './initiatives/initiatives.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { InitiativesModule } from './initiatives/initiatives.module';
     }),
       PrismaModule,
       InitiativesModule,
+      TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
