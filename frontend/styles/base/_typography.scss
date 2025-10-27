@@ -1,0 +1,24 @@
+@use "variables";
+
+@layer base {
+  h1, h2, h3 {
+    font-variation-settings: "wght" 700, "wdth" 100, "opsz" 16;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h1 {
+    font-size: variables.$text-3xl;
+    font-variation-settings: "wght" 800;
+  }
+
+  h2 {
+    font-size: variables.$text-2xl;
+    font-variation-settings: "wght" 700;
+  }
+
+  h3 {
+    font-size: variables.$text-xl;
+    font-variation-settings: "wght" 600;
+  }
+}
