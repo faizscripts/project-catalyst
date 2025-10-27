@@ -1,0 +1,17 @@
+@use "base/tailwind.css" as *;
+@use "base/variables" as *;
+@use "base/mixins" as *;
+@use "base/typography" as *;
+
+:root {
+  --primary: #{$color-primary};
+  --primary-foreground: #{$color-white};
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Fredoka', sans-serif;
+  background-color: $color-white;
+  color: $color-text-primary;
+}
