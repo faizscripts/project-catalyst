@@ -4,6 +4,7 @@ import { InitiativesService } from './initiatives.service';
 
 @Module({
   controllers: [InitiativesController],
-  providers: [InitiativesService]
+  providers: [InitiativesService],
+  exports: [InitiativesService],
 })
 export class InitiativesModule {}
