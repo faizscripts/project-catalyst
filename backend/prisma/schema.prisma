@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Initiative {
+  id          String           @id @default(uuid())
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  status      InitiativeStatus @default(Planned)
+  tasks       Task[]
+}
+
+model Task {
+  id                   String     @id @default(uuid())
+  name                 String
+  description          String?
+  dueDate              DateTime
+  status               TaskStatus @default(NotStarted)
+  completionPercentage Int        @default(0)
+  initiativeId         String
+  initiative           Initiative @relation(fields: [initiativeId], references: [id])
+}
+
+enum InitiativeStatus {
+  Planned
+  Active
+  Completed
+  Cancelled
+}
+
+enum TaskStatus {
+  NotStarted
+  InProgress
+  Blocked
+  Done
+}
