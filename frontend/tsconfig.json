@@ -25,7 +25,9 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
-      "@/lib/*": ["./lib/*"],
+      "@/api/*": ["./lib/api/*"],
+      "@/interfaces/*": ["./lib/interfaces/*"],
+      "@/types/*": ["./lib/types/*"],
       "@/styles/*": ["./styles/*"]
     }
   },
