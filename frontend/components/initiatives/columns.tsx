@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 import type { CellContext, ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/shadcn/button';
-import dateFormatter from '@/utils/date';
+import { formatDateToShort } from '@/utils/date';
 
 export const columns: ColumnDef<InitiativeInterface>[] = [
     {
@@ -15,12 +15,12 @@ export const columns: ColumnDef<InitiativeInterface>[] = [
     {
         accessorKey: 'startDate',
         header: 'Start Date',
-        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => <div>{ dateFormatter(row.getValue('startDate')) }</div>,
+        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => <div>{ formatDateToShort(row.getValue('startDate')) }</div>,
     },
     {
         accessorKey: 'endDate',
         header: 'End Date',
-        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => <div>{ dateFormatter(row.getValue('endDate')) }</div>,
+        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => <div>{ formatDateToShort(row.getValue('endDate')) }</div>,
     },
     {
         accessorKey: 'status',
@@ -39,7 +39,7 @@ export const columns: ColumnDef<InitiativeInterface>[] = [
 
             return (
                 <div className="flex justify-center gap-2">
-                    <Link href={ `/${initiative.id}` }>
+                    <Link href={ `/initiatives/${initiative.id}` }>
                         <Button variant="default">
                             <Pencil />
                         </Button>

@@ -1,7 +1,8 @@
 import { type ControllerRenderProps, type FieldValues, type Path, useFormContext } from 'react-hook-form';
-import type { FieldType } from '@/types/form';
+import type { FieldType, SelectOptionType } from '@/types/form';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/shadcn/form';
 import { Input } from '@/shadcn/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/shadcn/select';
 import { Textarea } from '@/shadcn/textarea';
 
 interface FormFieldWrapperProps<T extends FieldValues> {
@@ -10,9 +11,10 @@ interface FormFieldWrapperProps<T extends FieldValues> {
     placeholder?: string;
     description?: string;
     type?: FieldType;
+    selectOptions?: SelectOptionType[];
 }
 
-export default function FormFieldWrapper<T extends FieldValues>({ name, label, placeholder, description, type = 'text' }: FormFieldWrapperProps<T>): React.JSX.Element {
+export default function FormFieldWrapper<T extends FieldValues>({ name, label, placeholder, description, type = 'text', selectOptions }: FormFieldWrapperProps<T>): React.JSX.Element {
 
     const { control, formState } = useFormContext<T>();
     const disabled = formState.isSubmitting;
@@ -27,6 +29,22 @@ export default function FormFieldWrapper<T extends FieldValues>({ name, label, p
                     <FormControl>
                         { type === 'textarea' ? (
                             <Textarea placeholder={ placeholder } disabled={ disabled } { ...field } />
+                        )  : type === 'select' && selectOptions ? (
+                            <Select
+                                onValueChange={ field.onChange }
+                                value={ field.value }
+                                defaultValue={ field.value }>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        { selectOptions.map((selectOption: SelectOptionType) => {
+                                            return <SelectItem key={ selectOption.value } value={ selectOption.value }>{ selectOption.label }</SelectItem>;
+                                        }) }
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         ) : (
                             <Input type={ type } placeholder={ placeholder } disabled={ disabled } { ...field } />
                         ) }

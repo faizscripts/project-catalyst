@@ -1,4 +1,4 @@
-import type { FieldType } from '@/types/form';
+import type { FieldType, SelectOptionType } from '@/types/form';
 import type { FieldValues, Path } from 'react-hook-form';
 
 export interface FormFieldInterface<T extends FieldValues> {
@@ -6,4 +6,5 @@ export interface FormFieldInterface<T extends FieldValues> {
     label: string;
     placeholder?: string;
     type?: FieldType;
+    selectOptions?: SelectOptionType[];
 }

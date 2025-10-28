@@ -5,27 +5,27 @@ import { type Resolver, useForm } from 'react-hook-form';
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 import type { CreateInitiativeFormType } from '@/types/form';
 import Form from '@/components/ui/form/form';
-import { CREATE_INITIATIVE_FORM_DEFAULT_VALUES, createInitiativeFormFields } from '@/lib/constants/form';
+import { CREATE_INITIATIVE_FORM_DEFAULT_VALUES, createInitiativeFormFields } from '@/constants/form';
 import { InitiativeSchema } from '@/schemas/initiative';
 
 interface CreateInitiativeProps {
-    initiative: InitiativeInterface;
+    initiative?: InitiativeInterface;
+    handleSubmit: (data: CreateInitiativeFormType) => void;
 }
 
-export default function CreateInitiative({ initiative }: CreateInitiativeProps): React.JSX.Element {
+export default function CreateInitiative({ initiative, handleSubmit }: CreateInitiativeProps): React.JSX.Element {
+
+    const isEditMode = initiative !== undefined;
 
     const form = useForm<CreateInitiativeFormType>({
         resolver: zodResolver(InitiativeSchema) as Resolver<CreateInitiativeFormType>,
-        defaultValues: initiative ?? CREATE_INITIATIVE_FORM_DEFAULT_VALUES,
+        defaultValues: CREATE_INITIATIVE_FORM_DEFAULT_VALUES,
     });
     
-    const onSubmit = (data: CreateInitiativeFormType): void => {
-        console.info(data);
-    };
-    
     return (
-        <div className="full-height flex-center">
-            <Form form={ form } onSubmit={ onSubmit } formFields={ createInitiativeFormFields } />
-        </div>
+        <>
+            <h3 className="mb-10">{ isEditMode ? 'Update initiative' : 'Create initiative' }</h3>
+            <Form form={ form } onSubmit={ handleSubmit } formFields={ createInitiativeFormFields } submitButtonLabel={ isEditMode ? 'Update' : 'Create' } />
+        </>
     );
 }
