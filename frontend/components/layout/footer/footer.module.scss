@@ -4,7 +4,7 @@
 .wrapper {
   @include mixins.flex-center;
   padding: variables.$space-xs;
-  background-color: variables.$color-black;
+  background-color: variables.$color-primary;
 }
 
 .text {

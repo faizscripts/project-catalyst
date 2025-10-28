@@ -1,8 +1,10 @@
+import Link from 'next/link';
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 import { fetchInitiatives, getInitiativeProgress } from '@/api/initiatives';
 import { columns } from '@/components/initiatives/columns';
 import { DataTable } from '@/components/initiatives/data-table';
 import ErrorComponent from '@/components/ui/error-component';
+import { Button } from '@/shadcn/button';
 
 export default async function Home(): Promise<React.JSX.Element> {
     const { data: initiatives, error } = await fetchInitiatives();
@@ -32,7 +34,13 @@ export default async function Home(): Promise<React.JSX.Element> {
     );
 
     return (
-        <div className="full-height p-4">
+        <div className="full-height gap-4 p-4">
+            <div className="flex justify-between">
+                <h3>Initiatives list page</h3>
+                <Link href="/initiatives/new">
+                    <Button> Create new initiative </Button>
+                </Link>
+            </div>
             <DataTable columns={ columns } data={ initiativesWithProgress } />
         </div>
     );

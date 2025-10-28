@@ -26,6 +26,7 @@
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
       "@/api/*": ["./lib/api/*"],
+      "@/constants/*": ["./lib/constants/*"],
       "@/interfaces/*": ["./lib/interfaces/*"],
       "@/schemas/*": ["./lib/schemas/*"],
       "@/shadcn/*": ["./components/ui/shadcn/*"],
