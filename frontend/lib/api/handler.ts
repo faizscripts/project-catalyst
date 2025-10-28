@@ -1,9 +1,11 @@
+import type { ApiResponseType } from '@/types/api';
+
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
 export async function apiRequest<T>(
     endpoint: string,
     options: RequestInit = {}
-): Promise<T> {
+): Promise<ApiResponseType<T>> {
     const url = `${API_BASE}${endpoint}`;
 
     const defaultHeaders: HeadersInit = {
@@ -22,21 +24,31 @@ export async function apiRequest<T>(
     try {
         const res = await fetch(url, config);
 
-        if (!res.ok) {
-            const errorText = await res.text();
-            throw new Error(
-                `API Error (${res.status}): ${res.statusText} - ${errorText}`
-            );
-        }
-
+        let json: T | { message?: string } | null = null;
         const contentType = res.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
-            return res.json() as Promise<T>;
+            json = (await res.json()) as T | { message?: string };
         }
 
-        return null as T;
+        if (!res.ok) {
+            return {
+                error: {
+                    status: res.status,
+                    message: (json as { message?: string })?.message || res.statusText,
+                    details: json,
+                },
+            };
+        }
+
+        return { data: json as T };
     } catch (error: unknown) {
         console.error('API Request Failed:', error);
-        throw error;
+        return {
+            error: {
+                status: 500,
+                message: 'Internal API request error',
+                details: error,
+            },
+        };
     }
 }
