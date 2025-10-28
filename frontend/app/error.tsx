@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import ErrorComponent from '@/components/error-component';
+import ErrorComponent from '@/components/ui/error-component';
 
 export default function RootError({ error }: { error: Error }): React.JSX.Element {
     useEffect(() => {
