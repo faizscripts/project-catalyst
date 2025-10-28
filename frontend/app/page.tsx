@@ -1,8 +1,8 @@
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 import { fetchInitiatives, getInitiativeProgress } from '@/api/initiatives';
-import ErrorComponent from '@/components/error-component';
 import { columns } from '@/components/initiatives/columns';
 import { DataTable } from '@/components/initiatives/data-table';
+import ErrorComponent from '@/components/ui/error-component';
 
 export default async function Home(): Promise<React.JSX.Element> {
     const { data: initiatives, error } = await fetchInitiatives();

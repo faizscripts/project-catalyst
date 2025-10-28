@@ -33,12 +33,12 @@ export const columns: ColumnDef<InitiativeInterface>[] = [
     },
     {
         id: 'actions',
-        header: 'Actions',
+        header: () => <div className="flex justify-center">Actions</div>,
         cell: ({ row }: CellContext<InitiativeInterface, unknown>): React.JSX.Element => {
             const initiative = row.original;
 
             return (
-                <div className="flex gap-2">
+                <div className="flex justify-center gap-2">
                     <Link href={ `/${initiative.id}` }>
                         <Button variant="default">
                             <Pencil />

@@ -4,8 +4,8 @@ export interface InitiativeInterface {
     id: string,
     name: string,
     description?: string,
-    startDate: string,
-    endDate: string,
+    startDate: Date,
+    endDate: Date,
     status: InitiativeStatus,
     progress?: number,
 }

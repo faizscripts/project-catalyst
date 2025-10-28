@@ -1,5 +1,6 @@
 import { fetchInitiative } from '@/api/initiatives';
-import ErrorComponent from '@/components/error-component';
+import CreateInitiative from '@/components/initiatives/create-initiative';
+import ErrorComponent from '@/components/ui/error-component';
 
 interface InitiativeDetailsPageProps {
     params: {
@@ -22,8 +23,8 @@ export default async function InitiativeDetailsPage({ params }: InitiativeDetail
     }
 
     return (
-        <div className="p-4">
-            <p>Initiative details page { initiative.name }</p>
+        <div className="full-height">
+            <CreateInitiative initiative={ initiative } />
         </div>
     );
 }
