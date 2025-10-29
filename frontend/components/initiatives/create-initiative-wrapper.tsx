@@ -16,9 +16,15 @@ export default function CreateInitiativeWrapper({ initiative }: CreateInitiative
     const isEditMode = initiative !== undefined;
 
     const handleSubmit = async (data: CreateInitiativeFormType): Promise<void> => {
+        const payload = {
+            ...data,
+            startDate: new Date(data.startDate).toISOString(),
+            endDate: new Date(data.endDate).toISOString(),
+        };
+
         const { data: result, error } = isEditMode
-            ? await updateInitiative({ id: initiative.id, ...data })
-            : await createInitiative(data);
+            ? await updateInitiative({ id: initiative.id, ...payload })
+            : await createInitiative(payload);
 
         if (error) {
             console.error('Error submitting order:', error);

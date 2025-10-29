@@ -5,6 +5,7 @@ import { columns } from '@/components/initiatives/columns';
 import { DataTable } from '@/components/initiatives/data-table';
 import ErrorComponent from '@/components/ui/error-component';
 import { Button } from '@/shadcn/button';
+import formatInitiativeDates from '@/utils/date';
 
 export default async function Home(): Promise<React.JSX.Element> {
     const { data: initiatives, error } = await fetchInitiatives();
@@ -25,7 +26,7 @@ export default async function Home(): Promise<React.JSX.Element> {
                     return { ...initiative, progress: 0 };
                 }
 
-                return { ...initiative, progress: progressData.progress };
+                return { ...formatInitiativeDates(initiative), progress: progressData.progress };
             } catch (err) {
                 console.error(`Unexpected error fetching progress for ${initiative.id}:`, err);
                 return { ...initiative, progress: 0 };

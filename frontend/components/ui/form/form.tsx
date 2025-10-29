@@ -32,7 +32,7 @@ export default function Form<T extends FieldValues>({ form, onSubmit, formFields
                     ) : (
                         <div className="flex justify-around">
                             <Button type="submit">{ submitButtonLabel }</Button>
-                            <Button variant="ghost" onClick={ () => router.back() }>Cancel</Button>
+                            <Button type="button" variant="ghost" onClick={ () => router.back() }>Cancel</Button>
                         </div>
                     ) }
                 </div>

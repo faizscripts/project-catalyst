@@ -11,6 +11,7 @@ export const columns: ColumnDef<InitiativeInterface>[] = [
     {
         accessorKey: 'name',
         header: 'Name',
+        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => <div className="capitalize-first">{ row.getValue('name') }</div>,
     },
     {
         accessorKey: 'startDate',
