@@ -1,6 +1,5 @@
-import type { CreateInitiativeFormType } from '@/types/form';
 import { fetchInitiative } from '@/api/initiatives';
-import CreateInitiative from '@/components/initiatives/create-initiative';
+import CreateInitiativeWrapper from '@/components/initiatives/create-initiative-wrapper';
 import ErrorComponent from '@/components/ui/error-component';
 
 interface InitiativeDetailsPageProps {
@@ -23,11 +22,7 @@ export default async function InitiativeDetailsPage({ params }: InitiativeDetail
         return <ErrorComponent message="Initiative not found" />;
     }
 
-    const handleSubmit = (data: CreateInitiativeFormType): void => {
-        console.info('in handle submit', data);
-    };
-
     return (
-        <CreateInitiative initiative={ initiative } handleSubmit={ handleSubmit } />
+        <CreateInitiativeWrapper initiative={ initiative } />
     );
 }
