@@ -8,18 +8,17 @@ import Form from '@/components/ui/form/form';
 import { CREATE_INITIATIVE_FORM_DEFAULT_VALUES, createInitiativeFormFields } from '@/constants/form';
 import { InitiativeSchema } from '@/schemas/initiative';
 
-interface CreateInitiativeProps {
+interface CreateInitiativeComponentProps {
     initiative?: InitiativeInterface;
     handleSubmit: (data: CreateInitiativeFormType) => void;
+    isEditMode: boolean;
 }
 
-export default function CreateInitiative({ initiative, handleSubmit }: CreateInitiativeProps): React.JSX.Element {
-
-    const isEditMode = initiative !== undefined;
+export default function CreateInitiativeComponent({ initiative, handleSubmit, isEditMode }: CreateInitiativeComponentProps): React.JSX.Element {
 
     const form = useForm<CreateInitiativeFormType>({
         resolver: zodResolver(InitiativeSchema) as Resolver<CreateInitiativeFormType>,
-        defaultValues: CREATE_INITIATIVE_FORM_DEFAULT_VALUES,
+        defaultValues: initiative ?? CREATE_INITIATIVE_FORM_DEFAULT_VALUES,
     });
     
     return (

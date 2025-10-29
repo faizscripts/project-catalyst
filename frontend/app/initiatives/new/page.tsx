@@ -1,15 +1,7 @@
-'use client';
-
-import type { CreateInitiativeFormType } from '@/types/form';
-import CreateInitiative from '@/components/initiatives/create-initiative';
+import CreateInitiativeWrapper from '@/components/initiatives/create-initiative-wrapper';
 
 export default function NewInitiativePage(): React.JSX.Element {
-    
-    const handleSubmit = (data: CreateInitiativeFormType): void => {
-        console.info('in handle submit', data);
-    };
-    
     return (
-        <CreateInitiative handleSubmit={ handleSubmit } />
+        <CreateInitiativeWrapper />
     );
 }

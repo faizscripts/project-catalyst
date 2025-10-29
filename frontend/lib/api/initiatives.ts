@@ -14,8 +14,8 @@ export const fetchInitiatives = (): Promise<ApiResponseType<InitiativeInterface[
 export const fetchInitiative = (id: string): Promise<ApiResponseType<InitiativeInterface>> =>
     apiRequest<InitiativeInterface>(`/initiatives/${id}`, { method: 'GET' });
 
-export const updateInitiative = (id: string, data: Partial<Omit<InitiativeInterface, 'id'>>): Promise<ApiResponseType<InitiativeInterface>> =>
-    apiRequest<InitiativeInterface>(`/initiatives/${id}`, {
+export const updateInitiative = (data: InitiativeInterface): Promise<ApiResponseType<InitiativeInterface>> =>
+    apiRequest<InitiativeInterface>(`/initiatives/${data.id}`, {
         method: 'PATCH',
         body: JSON.stringify(data),
     });

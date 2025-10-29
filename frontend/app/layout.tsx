@@ -2,6 +2,7 @@ import { Fredoka } from 'next/font/google';
 import type { Metadata } from 'next';
 import '@/styles/main.scss';
 import Footer from '@/components/layout/footer';
+import { Toaster } from '@/shadcn/sonner';
 
 const fredoka = Fredoka({
     subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
               </div>
               <Footer />
           </div>
+          <Toaster position="top-center" expand={ true } duration={ 6000 } richColors closeButton />
       </body>
     </html>
   );
