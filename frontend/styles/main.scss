@@ -31,4 +31,10 @@ html, body {
   .flex-center {
     @apply flex justify-center items-center;
   }
+
+  .capitalize-first {
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
 }
