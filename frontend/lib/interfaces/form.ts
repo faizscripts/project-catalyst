@@ -7,4 +7,5 @@ export interface FormFieldInterface<T extends FieldValues> {
     placeholder?: string;
     type?: FieldType;
     selectOptions?: SelectOptionType[];
+    isReadOnly?: boolean;
 }

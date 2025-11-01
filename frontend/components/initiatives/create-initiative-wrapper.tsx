@@ -1,41 +1,74 @@
 'use client';
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 import type { CreateInitiativeFormType } from '@/types/form';
-import { createInitiative, updateInitiative } from '@/api/initiatives';
+import { createInitiative, fetchInitiativeWithProgress, updateInitiative } from '@/api/initiatives';
 import CreateInitiativeComponent from '@/components/initiatives/create-initiative-component';
+import ErrorComponent from '@/components/ui/error-component';
+import LoadingComponent from '@/components/ui/loading-component';
+import { normalizeError } from '@/utils/error';
 
 interface CreateInitiativeWrapperProps {
-    initiative?: InitiativeInterface;
+    initiativeId?: string;
 }
 
-export default function CreateInitiativeWrapper({ initiative }: CreateInitiativeWrapperProps): React.JSX.Element {
+export default function CreateInitiativeWrapper({ initiativeId }: CreateInitiativeWrapperProps): React.JSX.Element {
     const router = useRouter();
-    const isEditMode = initiative !== undefined;
+    const queryClient = useQueryClient();
+    const isEditMode = initiativeId !== undefined;
 
-    const handleSubmit = async (data: CreateInitiativeFormType): Promise<void> => {
-        const payload = {
-            ...data,
-            startDate: new Date(data.startDate).toISOString(),
-            endDate: new Date(data.endDate).toISOString(),
-        };
+    const { data: initiative, isLoading: isFetchingInitiative, error: isFetchingInitiativeError } = useQuery({
+        queryKey: ['initiative', initiativeId],
+        queryFn: () => fetchInitiativeWithProgress(initiativeId!),
+        enabled: isEditMode,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
+    });
 
-        const { data: result, error } = isEditMode
-            ? await updateInitiative({ id: initiative.id, ...payload })
-            : await createInitiative(payload);
+    const mutation = useMutation<InitiativeInterface, Error, CreateInitiativeFormType>({
+        mutationFn: async (data: CreateInitiativeFormType) => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { progress, ...rest } = data;
 
-        if (error) {
-            console.error('Error submitting order:', error);
-            toast.error(error.message);
-        }
-        
-        if (result) {
-            toast.success(`${result.name} initiative ${isEditMode ? 'updated' : 'created'} successfully`);
-            router.push('/');
-        }
-    };
+            const payload = {
+                ...rest,
+                startDate: new Date(data.startDate).toISOString(),
+                endDate: new Date(data.endDate).toISOString(),
+            };
 
-    return <CreateInitiativeComponent initiative={ initiative } handleSubmit={ handleSubmit } isEditMode={ isEditMode } />;
+            return isEditMode
+                ? await updateInitiative({ id: initiativeId, ...payload })
+                : await createInitiative(payload);
+        },
+        onSuccess: async (response: InitiativeInterface) => {
+            if (response) {
+                toast.success(`${response.name} initiative ${isEditMode ? 'updated' : 'created'} successfully`);
+
+                queryClient.setQueryData<InitiativeInterface[]>(['initiatives'], (oldData: InitiativeInterface[] | undefined = []) => {
+                    const filtered = oldData.filter((i: InitiativeInterface) => i.id !== response.id);
+                    return [...filtered, { ...response, progress: 0 }];
+                });
+
+                router.push('/');
+            }
+        },
+        onError: (error: Error) => {
+            const normalized = normalizeError(error);
+            toast.error(normalized.message);
+        },
+    });
+
+    if (isEditMode && isFetchingInitiative) {
+        return <LoadingComponent />;
+    }
+    
+    if (isEditMode && isFetchingInitiativeError) {
+        const normalized = normalizeError(isFetchingInitiativeError);
+        return <ErrorComponent status={ normalized.status } message={ normalized.message } />;
+    }
+
+    return <CreateInitiativeComponent initiative={ initiative } handleSubmit={ mutation.mutateAsync } isEditMode={ isEditMode } />;
 }
