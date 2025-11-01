@@ -11,10 +11,11 @@ interface FormFieldWrapperProps<T extends FieldValues> {
     placeholder?: string;
     description?: string;
     type?: FieldType;
+    isReadOnly?: boolean;
     selectOptions?: SelectOptionType[];
 }
 
-export default function FormFieldWrapper<T extends FieldValues>({ name, label, placeholder, description, type = 'text', selectOptions }: FormFieldWrapperProps<T>): React.JSX.Element {
+export default function FormFieldWrapper<T extends FieldValues>({ name, label, placeholder, description, type = 'text', isReadOnly = false, selectOptions }: FormFieldWrapperProps<T>): React.JSX.Element {
 
     const { control, formState } = useFormContext<T>();
     const disabled = formState.isSubmitting;
@@ -28,7 +29,7 @@ export default function FormFieldWrapper<T extends FieldValues>({ name, label, p
                     <FormLabel>{ label }</FormLabel>
                     <FormControl>
                         { type === 'textarea' ? (
-                            <Textarea placeholder={ placeholder } disabled={ disabled } { ...field } />
+                            <Textarea placeholder={ placeholder } disabled={ disabled } readOnly={ isReadOnly } { ...field } />
                         )  : type === 'select' && selectOptions ? (
                             <Select
                                 onValueChange={ field.onChange }
@@ -46,7 +47,7 @@ export default function FormFieldWrapper<T extends FieldValues>({ name, label, p
                                 </SelectContent>
                             </Select>
                         ) : (
-                            <Input type={ type } placeholder={ placeholder } disabled={ disabled } { ...field } />
+                            <Input type={ type } placeholder={ placeholder } disabled={ disabled } readOnly={ isReadOnly } { ...field } />
                         ) }
                     </FormControl>
                     { description && <FormDescription>{ description }</FormDescription> }

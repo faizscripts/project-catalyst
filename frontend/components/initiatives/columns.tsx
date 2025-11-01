@@ -1,10 +1,8 @@
 'use client';
 
-import { Pencil, Trash2 } from 'lucide-react';
-import Link from 'next/link';
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 import type { CellContext, ColumnDef } from '@tanstack/react-table';
-import { Button } from '@/shadcn/button';
+import InitiativeActionsColumn from '@/components/initiatives/initiative-actions-column';
 import { formatDateToShort } from '@/utils/date';
 
 export const columns: ColumnDef<InitiativeInterface>[] = [
@@ -37,18 +35,10 @@ export const columns: ColumnDef<InitiativeInterface>[] = [
         header: () => <div className="flex justify-center">Actions</div>,
         cell: ({ row }: CellContext<InitiativeInterface, unknown>): React.JSX.Element => {
             const initiative = row.original;
-
             return (
-                <div className="flex justify-center gap-2">
-                    <Link href={ `/initiatives/${initiative.id}` }>
-                        <Button variant="default">
-                            <Pencil />
-                        </Button>
-                    </Link>
-                    <Button variant="destructive">
-                        <Trash2 />
-                    </Button>
-                </div>
+                <InitiativeActionsColumn
+                    id={ initiative.id }
+                    name={ initiative.name } />
             );
         },
     },

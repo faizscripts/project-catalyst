@@ -1,6 +1,6 @@
 'use client';
 
-import { type ColumnDef, type Cell, type Header, type HeaderGroup, type Row, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { type ColumnDef, type Cell, type Header, type HeaderGroup, type Row, flexRender, getCoreRowModel, useReactTable, getPaginationRowModel } from '@tanstack/react-table';
 import { DataTablePagination } from '@/shadcn/pagination';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shadcn/table';
 
@@ -14,6 +14,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
     });
 
     return (

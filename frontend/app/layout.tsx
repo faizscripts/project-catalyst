@@ -1,4 +1,5 @@
 import { Fredoka } from 'next/font/google';
+import QueryProvider from './providers';
 import type { Metadata } from 'next';
 import '@/styles/main.scss';
 import Footer from '@/components/layout/footer';
@@ -34,13 +35,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={ `${fredoka.variable} antialiased` }>
-          <div className="site-container">
-              <div className="full-height">
-                  { children }
-              </div>
-              <Footer />
-          </div>
-          <Toaster position="top-center" expand={ true } duration={ 6000 } richColors closeButton />
+        <QueryProvider>
+            <div className="site-container">
+                <div className="full-height">
+                    { children }
+                </div>
+                <Footer />
+            </div>
+            <Toaster position="top-center" expand={ true } duration={ 6000 } richColors closeButton />
+        </QueryProvider>
       </body>
     </html>
   );

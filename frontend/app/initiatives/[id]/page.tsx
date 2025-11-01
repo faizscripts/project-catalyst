@@ -1,7 +1,7 @@
-import { fetchInitiative } from '@/api/initiatives';
+import { HydrationBoundary } from '@tanstack/react-query';
+import { fetchInitiativeWithProgress } from '@/api/initiatives';
 import CreateInitiativeWrapper from '@/components/initiatives/create-initiative-wrapper';
-import ErrorComponent from '@/components/ui/error-component';
-import formatInitiativeDates from '@/utils/date';
+import { prefetchQuery } from '@/utils/react-query';
 
 interface InitiativeDetailsPageProps {
     params: {
@@ -13,19 +13,14 @@ export default async function InitiativeDetailsPage({ params }: InitiativeDetail
 
     const { id } = await params;
 
-    const { data: rawInitiative, error } = await fetchInitiative(id);
-
-    if (error) {
-        return <ErrorComponent status={ error.status } message={ error.message } />;
-    }
-
-    if (!rawInitiative) {
-        return <ErrorComponent message="Initiative not found" />;
-    }
-
-    const initiative = formatInitiativeDates(rawInitiative);
+    const dehydratedState = await prefetchQuery(
+        ['initiative', id],
+        () => fetchInitiativeWithProgress(id)
+    );
 
     return (
-        <CreateInitiativeWrapper initiative={ initiative } />
+        <HydrationBoundary state={ dehydratedState }>
+            <CreateInitiativeWrapper initiativeId={ id } />
+        </HydrationBoundary>
     );
 }
