@@ -16,6 +16,14 @@ export class TasksService {
     private readonly initiativesService: InitiativesService,
   ) {}
 
+  async findByInitiative(initiativeId: string) {
+    return this.prisma.task.findMany({
+      where: { initiativeId },
+      orderBy: { dueDate: 'asc' },
+      include: { initiative: true },
+    });
+  }
+
   async create(data: CreateTaskDto) {
     const initiative = await this.initiativesService.findOne(data.initiativeId);
 

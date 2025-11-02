@@ -15,6 +15,11 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
+  @Get('/initiatives/:initiativeId')
+  findByInitiative(@Param('initiativeId') initiativeId: string) {
+    return this.tasksService.findByInitiative(initiativeId);
+  }
+
   @Post()
   create(@Body() dto: CreateTaskDto) {
     return this.tasksService.create(dto);
