@@ -8,17 +8,17 @@
   }
 
   h1 {
-    font-size: variables.$text-3xl;
-    font-variation-settings: "wght" 800;
-  }
-
-  h2 {
     font-size: variables.$text-2xl;
     font-variation-settings: "wght" 700;
   }
 
-  h3 {
+  h2 {
     font-size: variables.$text-xl;
     font-variation-settings: "wght" 600;
+  }
+
+  h3 {
+    font-size: variables.$text-lg;
+    font-variation-settings: "wght" 500;
   }
 }

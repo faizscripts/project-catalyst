@@ -23,7 +23,7 @@ export default function CreateInitiativeComponent({ initiative, handleSubmit, is
     
     return (
         <>
-            <h3 className="mb-10">{ isEditMode ? 'Update initiative' : 'Create initiative' }</h3>
+            <h2 className="mb-8">{ isEditMode ? 'Update initiative' : 'Create initiative' }</h2>
             <Form form={ form } onSubmit={ handleSubmit } formFields={ createInitiativeFormFields } submitButtonLabel={ isEditMode ? 'Update' : 'Create' } />
         </>
     );
