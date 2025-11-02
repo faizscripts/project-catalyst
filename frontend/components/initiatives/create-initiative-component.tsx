@@ -1,11 +1,13 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { type Resolver, useForm } from 'react-hook-form';
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 import type { CreateInitiativeFormType } from '@/types/form';
+import TasksListWrapper from '@/components/tasks/tasks-list-wrapper';
 import Form from '@/components/ui/form/form';
-import { CREATE_INITIATIVE_FORM_DEFAULT_VALUES, createInitiativeFormFields } from '@/constants/form';
+import { CREATE_INITIATIVE_FORM_DEFAULT_VALUES, createInitiativeFormFields } from '@/constants/initiative';
 import { InitiativeSchema } from '@/schemas/initiative';
 
 interface CreateInitiativeComponentProps {
@@ -15,6 +17,9 @@ interface CreateInitiativeComponentProps {
 }
 
 export default function CreateInitiativeComponent({ initiative, handleSubmit, isEditMode }: CreateInitiativeComponentProps): React.JSX.Element {
+    const router = useRouter();
+
+    const label = isEditMode ? 'Update' : 'Create';
 
     const form = useForm<CreateInitiativeFormType>({
         resolver: zodResolver(InitiativeSchema) as Resolver<CreateInitiativeFormType>,
@@ -23,8 +28,15 @@ export default function CreateInitiativeComponent({ initiative, handleSubmit, is
     
     return (
         <>
-            <h2 className="mb-8">{ isEditMode ? 'Update initiative' : 'Create initiative' }</h2>
-            <Form form={ form } onSubmit={ handleSubmit } formFields={ createInitiativeFormFields } submitButtonLabel={ isEditMode ? 'Update' : 'Create' } />
+            <h2 className="mb-8">{ label } initiative</h2>
+            <Form 
+                form={ form }
+                formFields={ createInitiativeFormFields }
+                submitButtonLabel={ label }
+                onSubmit={ handleSubmit }   
+                onCancel={ () => router.back() }>
+                <TasksListWrapper />
+            </Form>
         </>
     );
 }

@@ -1,4 +1,5 @@
 import type { TaskInterface } from '@/interfaces/tasks';
+import TasksActions from '@/components/tasks/tasks-actions';
 import { Card, CardContent } from '@/shadcn/card';
 
 interface TaskCardProps {
@@ -19,7 +20,7 @@ export default function TaskCard({ task }: TaskCardProps): React.JSX.Element {
                         </div>
                     </div>
                     <div className="flex items-center">
-                        actions
+                        <TasksActions task={ task } />
                     </div>
                 </div>
             </CardContent>

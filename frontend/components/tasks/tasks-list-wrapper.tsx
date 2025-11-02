@@ -1,5 +1,6 @@
-import Link from 'next/link';
 import type { TaskInterface } from '@/interfaces/tasks';
+import type { CreateTaskFormType } from '@/types/form';
+import CreateTaskDrawer from '@/components/tasks/create-task-drawer';
 import TasksList from '@/components/tasks/tasks-list';
 import { Button } from '@/shadcn/button';
 import { formatDateToShort } from '@/utils/date';
@@ -27,13 +28,16 @@ export default function TasksListWrapper(): React.JSX.Element {
         }
     ];
 
+    const handleSubmit = (data: CreateTaskFormType): void => {
+    };
+
     return (
         <div>
             <div className="flex justify-between items-center">
                 <h3>Tasks list</h3>
-                <Link href="/initiatives/new">
-                    <Button variant="default" size="sm">Add new task</Button>
-                </Link>
+                <CreateTaskDrawer handleSubmit={ handleSubmit } isEditMode={ false }>
+                    <Button size="sm">Add task</Button>
+                </CreateTaskDrawer>
             </div>
             <TasksList tasks={ tasks } />
         </div>
