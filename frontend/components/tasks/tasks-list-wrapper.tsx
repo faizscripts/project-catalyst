@@ -1,32 +1,46 @@
+import { useQuery } from '@tanstack/react-query';
 import type { TaskInterface } from '@/interfaces/tasks';
 import type { CreateTaskFormType } from '@/types/form';
+import { fetchTasksByInitiative } from '@/api/tasks';
 import CreateTaskDrawer from '@/components/tasks/create-task-drawer';
 import TasksList from '@/components/tasks/tasks-list';
+import ErrorComponent from '@/components/ui/error-component';
+import LoadingComponent from '@/components/ui/loading-component';
 import { Button } from '@/shadcn/button';
-import { formatDateToShort } from '@/utils/date';
+import { normalizeError } from '@/utils/error';
 
-export default function TasksListWrapper(): React.JSX.Element {
+interface TasksListWrapperProps {
+    initiativeId?: string;
+}
 
-    const tasks: TaskInterface[] = [
-        {
-            id: '1',
-            name: 'task 1',
-            description: 'description',
-            dueDate: formatDateToShort(new Date()),
-            status: 'Not Started',
-            completionPercentage: 0,
-            initiativeId: '1',
-        },
-        {
-            id: '2',
-            name: 'task 2',
-            description: 'description',
-            dueDate: formatDateToShort(new Date()),
-            status: 'In Progress',
-            completionPercentage: 20,
-            initiativeId: '1',
-        }
-    ];
+export default function TasksListWrapper({ initiativeId }: TasksListWrapperProps): React.JSX.Element {
+
+    const isEditMode = initiativeId !== undefined;
+
+    const { data: tasks = [], isLoading: isFetchingTasks, error: isFetchingTasksError } = useQuery<TaskInterface[]>({
+        queryKey: ['tasks', initiativeId],
+        queryFn: () => fetchTasksByInitiative(initiativeId!),
+        enabled: isEditMode,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
+    });
+
+    if (isEditMode && isFetchingTasks) {
+        return (
+            <div className="flex-center">
+                <LoadingComponent />
+            </div>
+        );
+    }
+
+    if (isEditMode && isFetchingTasksError) {
+        const normalized = normalizeError(isFetchingTasksError);
+        return (
+            <div className="flex-center">
+                <ErrorComponent status={ normalized.status } message={ normalized.message } />
+            </div>
+        );
+    }
 
     const handleSubmit = (data: CreateTaskFormType): void => {
     };
