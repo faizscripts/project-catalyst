@@ -1,7 +1,10 @@
 import { format } from 'date-fns';
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 
-export function formatDateToShort(date: Date): string {
+export function formatDateToShort(date: Date | string): string {
+    if (typeof date === 'string') {
+        date = new Date(date);
+    }
     return format(date, 'dd/MM/yy');
 }
 

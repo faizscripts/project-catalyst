@@ -14,7 +14,9 @@ export default function TasksList({ tasks }: TasksListProps): React.JSX.Element 
 
     return (
         <>
-            { tasks.map((task: TaskInterface) => ( <TaskCard key={ task.id } task={ task } />)) }
+            { tasks.map((task: TaskInterface) => (
+                <TaskCard key={ task.id } task={ task } />
+            )) }
         </>
     );
 }

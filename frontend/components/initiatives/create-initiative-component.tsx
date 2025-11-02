@@ -35,7 +35,7 @@ export default function CreateInitiativeComponent({ initiative, handleSubmit, is
                 submitButtonLabel={ label }
                 onSubmit={ handleSubmit }   
                 onCancel={ () => router.back() }>
-                <TasksListWrapper />
+                <TasksListWrapper initiativeId={ initiative?.id } />
             </Form>
         </>
     );
