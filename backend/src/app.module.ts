@@ -11,9 +11,9 @@ import { TasksModule } from './tasks/tasks.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-      PrismaModule,
-      InitiativesModule,
-      TasksModule,
+    PrismaModule,
+    InitiativesModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

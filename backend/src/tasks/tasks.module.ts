@@ -6,6 +6,6 @@ import { InitiativesModule } from '../initiatives/initiatives.module';
 @Module({
   imports: [InitiativesModule],
   controllers: [TasksController],
-  providers: [TasksService]
+  providers: [TasksService],
 })
 export class TasksModule {}
