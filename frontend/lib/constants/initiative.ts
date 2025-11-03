@@ -25,5 +25,5 @@ export const createInitiativeFormFields: FormFieldInterface<CreateInitiativeForm
     { name: 'startDate', label: 'Start Date' , type: 'date' },
     { name: 'endDate', label: 'End Date', type: 'date'  },
     { name: 'status', label: 'Status', type: 'select', selectOptions: initiativeStatusOptions },
-    { name: 'progress', label: 'Progress', type: 'number', isReadOnly: true },
+    { name: 'progress', label: 'Progress %', type: 'number', isReadOnly: true },
 ];
