@@ -1,4 +1,5 @@
 import type { TaskInterface } from '@/interfaces/tasks';
+import TaskStatusBadge from '@/components/tasks/task-status-badge';
 import TasksActions from '@/components/tasks/tasks-actions';
 import { Card, CardContent } from '@/shadcn/card';
 import { formatDateToShort } from '@/utils/date';
@@ -20,7 +21,7 @@ export default function TaskCard({ task }: TaskCardProps): React.JSX.Element {
                             Due on { formatDateToShort(task.dueDate) }
                         </div>
                         <div>
-                            { task.status } - { task.completionPercentage }%
+                            <TaskStatusBadge status={ task.status } /> - { task.completionPercentage }%
                         </div>
                     </div>
                     <div className="flex items-center ml-4 shrink-0">
