@@ -33,9 +33,7 @@ export default function CreateTaskDrawer({ initiativeName, task, handleSubmit, i
 
     const handleOpenChange = (isOpen: boolean): void => {
         setOpen(isOpen);
-        if (!isOpen) {
-            form.reset(task ?? CREATE_TASK_FORM_DEFAULT_VALUES);
-        }
+        form.reset(task ?? CREATE_TASK_FORM_DEFAULT_VALUES);
     };
 
     return (

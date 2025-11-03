@@ -1,3 +1,4 @@
+import type { InitiativeInterface } from '@/interfaces/initiatives';
 import type { TaskInterface } from '@/interfaces/tasks';
 import TasksActions from '@/components/tasks/tasks-actions';
 import StatusBadge from '@/components/ui/status-badge';
@@ -6,10 +7,11 @@ import { taskStatusLabels, taskStatusVariants } from '@/types/tasks';
 import { formatDateToShort } from '@/utils/date';
 
 interface TaskCardProps {
+    initiative: InitiativeInterface;
     task: TaskInterface;
 }
 
-export default function TaskCard({ task }: TaskCardProps): React.JSX.Element {
+export default function TaskCard({ initiative, task }: TaskCardProps): React.JSX.Element {
     return (
         <Card className="my-4 p-2">
             <CardContent className="px-2 text-left text-sm">
@@ -30,7 +32,7 @@ export default function TaskCard({ task }: TaskCardProps): React.JSX.Element {
                         </div>
                     </div>
                     <div className="flex items-center ml-4 shrink-0">
-                        <TasksActions task={ task } />
+                        <TasksActions initiative={ initiative } task={ task } />
                     </div>
                 </div>
             </CardContent>

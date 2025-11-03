@@ -28,6 +28,7 @@
       "@/api/*": ["./lib/api/*"],
       "@/constants/*": ["./lib/constants/*"],
       "@/interfaces/*": ["./lib/interfaces/*"],
+      "@/hooks/*": ["./hooks/*"],
       "@/schemas/*": ["./lib/schemas/*"],
       "@/shadcn/*": ["./components/ui/shadcn/*"],
       "@/styles/*": ["./styles/*"],
