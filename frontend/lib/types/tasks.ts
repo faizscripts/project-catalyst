@@ -8,3 +8,10 @@ export const taskStatusLabels: Record<TaskStatus, string> = {
     Blocked: 'Blocked',
     Done: 'Done',
 };
+
+export const taskStatusVariants = {
+    NotStarted: 'secondary',
+    InProgress: 'alternate',
+    Blocked: 'destructive',
+    Done: 'success',
+} as const;
