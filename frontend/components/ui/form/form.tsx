@@ -17,9 +17,18 @@ interface FormProps<T extends FieldValues> {
 }
 
 export default function Form<T extends FieldValues>({ form, formFields, children, submitButtonLabel, onSubmit, onCancel }: FormProps<T>): React.JSX.Element {
+
+    const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (onSubmit) {
+            await form.handleSubmit(onSubmit)(event);
+        }
+    };
+
     return (
         <ShadCnForm { ...form }>
-            <form onSubmit={ onSubmit ? form.handleSubmit(onSubmit) : undefined } className="space-y-6 w-full max-w-md">
+            <form onSubmit={ handleFormSubmit } className="space-y-6 w-full max-w-md">
                 { formFields.map((field: FormFieldInterface<T>) => (
                     <FormFieldWrapper key={ field.name } { ...field } />
                 )) }

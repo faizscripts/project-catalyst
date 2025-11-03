@@ -9,13 +9,14 @@ import { TaskSchema } from '@/schemas/task';
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/shadcn/drawer';
 
 interface CreateTaskDrawerProps {
+    initiativeName: string;
     task?: TaskInterface;
     handleSubmit: (data: CreateTaskFormType) => void;
     isEditMode: boolean;
     children?: React.ReactNode;
 }
 
-export default function CreateTaskDrawer({ task, handleSubmit, isEditMode, children }: CreateTaskDrawerProps): React.JSX.Element {
+export default function CreateTaskDrawer({ initiativeName, task, handleSubmit, isEditMode, children }: CreateTaskDrawerProps): React.JSX.Element {
     const [open, setOpen] = useState(false);
     
     const label = isEditMode ? 'Update' : 'Add';
@@ -30,8 +31,15 @@ export default function CreateTaskDrawer({ task, handleSubmit, isEditMode, child
         setOpen(false);
     };
 
+    const handleOpenChange = (isOpen: boolean): void => {
+        setOpen(isOpen);
+        if (!isOpen) {
+            form.reset(task ?? CREATE_TASK_FORM_DEFAULT_VALUES);
+        }
+    };
+
     return (
-        <Drawer open={ open } onOpenChange={ setOpen } >
+        <Drawer open={ open } onOpenChange={ handleOpenChange } >
             <DrawerTrigger asChild>
                 { children }
             </DrawerTrigger>
@@ -40,7 +48,9 @@ export default function CreateTaskDrawer({ task, handleSubmit, isEditMode, child
                     <DrawerTitle>
                         { label } Task
                     </DrawerTitle>
-                    <DrawerDescription>for x initiative</DrawerDescription>
+                    <DrawerDescription>
+                        for <span className="font-semibold">{ initiativeName }</span> initiative
+                    </DrawerDescription>
                 </DrawerHeader>
                 <div className="flex-center mb-8">
                     <Form

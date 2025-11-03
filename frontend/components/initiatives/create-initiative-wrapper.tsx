@@ -52,7 +52,9 @@ export default function CreateInitiativeWrapper({ initiativeId }: CreateInitiati
                     return [...filtered, { ...response, progress: 0 }];
                 });
 
-                router.push('/');
+                isEditMode
+                    ? router.push('/')
+                    : router.push(`/initiatives/${ response.id }`);
             }
         },
         onError: (error: Error) => {
