@@ -3,6 +3,8 @@
 import type { InitiativeInterface } from '@/interfaces/initiatives';
 import type { CellContext, ColumnDef } from '@tanstack/react-table';
 import InitiativeActionsColumn from '@/components/initiatives/initiative-actions-column';
+import StatusBadge from '@/components/ui/status-badge';
+import { type InitiativeStatus, initiativeStatusLabels, initiativeStatusVariants } from '@/types/initiatives';
 import { formatDateToShort } from '@/utils/date';
 
 export const columns: ColumnDef<InitiativeInterface>[] = [
@@ -24,6 +26,12 @@ export const columns: ColumnDef<InitiativeInterface>[] = [
     {
         accessorKey: 'status',
         header: 'Status',
+        cell: ({ row }: CellContext<InitiativeInterface, unknown>) => (
+            <StatusBadge 
+                status={ row.getValue('status') as InitiativeStatus } 
+                labelMap={ initiativeStatusLabels }
+                variantMap={ initiativeStatusVariants } />
+        ),
     },
     {
         accessorKey: 'progress',
