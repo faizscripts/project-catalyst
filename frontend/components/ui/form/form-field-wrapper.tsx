@@ -1,5 +1,6 @@
 import { type ControllerRenderProps, type FieldValues, type Path, useFormContext } from 'react-hook-form';
 import type { FieldType, SelectOptionType } from '@/types/form';
+import { DateInput } from '@/shadcn/date-input';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/shadcn/form';
 import { Input } from '@/shadcn/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/shadcn/select';
@@ -46,8 +47,22 @@ export default function FormFieldWrapper<T extends FieldValues>({ name, label, p
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
+                        ) : type === 'date' ? (
+                            <DateInput
+                                { ...field }
+                                fieldRef={ field.ref }
+                                placeholder={ placeholder }
+                                disabled={ disabled }
+                                readOnly={ isReadOnly }
+                            />
                         ) : (
-                            <Input type={ type } placeholder={ placeholder } disabled={ disabled } readOnly={ isReadOnly } { ...field } />
+                            <Input
+                                type={ type }
+                                placeholder={ placeholder }
+                                disabled={ disabled }
+                                readOnly={ isReadOnly }
+                                { ...field }
+                            />
                         ) }
                     </FormControl>
                     { description && <FormDescription>{ description }</FormDescription> }
