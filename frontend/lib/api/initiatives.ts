@@ -23,7 +23,7 @@ export const updateInitiative = (data: InitiativeInterface): Promise<InitiativeI
 export const deleteInitiative = (id: string): Promise<InitiativeInterface> =>
     apiRequest<InitiativeInterface>(`/initiatives/${id}`, { method: 'DELETE' });
 
-const getInitiativeProgress = (id: string): Promise<{ progress: number }> =>
+export const getInitiativeProgress = (id: string): Promise<{ progress: number }> =>
     apiRequest<{ progress: number }>(`/initiatives/${id}/progress`, { method: 'GET' });
 
 export const fetchInitiativeWithProgress = async ( id: string ): Promise<InitiativeInterface> => {

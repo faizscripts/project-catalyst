@@ -8,7 +8,6 @@ export const InitiativeSchema = z.object({
     startDate: z.string().nonempty('Start date is required'),
     endDate: z.string().nonempty('End date is required'),
     status: z.enum(initiativeStatusValues),
-    progress: z.number(),
 })
     .refine(
         (data: CreateInitiativeFormType) => new Date(data.endDate) > new Date(data.startDate),

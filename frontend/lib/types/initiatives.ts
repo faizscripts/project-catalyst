@@ -1,3 +1,5 @@
+import type { QueryObserverResult } from '@tanstack/query-core';
+
 export type InitiativeStatus = 'Planned' | 'Active' | 'Completed' | 'Cancelled';
 
 export const initiativeStatusValues = ['Planned', 'Active', 'Completed', 'Cancelled'] as const;
@@ -15,3 +17,5 @@ export const initiativeStatusVariants = {
     Completed: 'success',
     Cancelled: 'destructive',
 } as const;
+
+export type RefetchProgressType = () => Promise<QueryObserverResult<{ progress: number }, Error>>;

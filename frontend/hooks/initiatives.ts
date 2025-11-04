@@ -2,7 +2,7 @@ import { type UseQueryResult, type UseMutationResult, useQuery, useQueryClient, 
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import type { SaveInitiativeMutateInterface, DeleteInitiativeMutateInterface, DeleteInitiativeMutationResult, InitiativeInterface } from '@/interfaces/initiatives';
-import { createInitiative, deleteInitiative, fetchInitiativesWithProgress, fetchInitiativeWithProgress, updateInitiative } from '@/api/initiatives';
+import { createInitiative, deleteInitiative, fetchInitiativesWithProgress, fetchInitiativeWithProgress, getInitiativeProgress, updateInitiative } from '@/api/initiatives';
 import { normalizeError } from '@/utils/error';
 
 export const useFetchInitiatives = (): UseQueryResult<InitiativeInterface[], Error> => {
@@ -30,11 +30,8 @@ export const useSaveInitiative = (): UseMutationResult<InitiativeInterface, Erro
     
     return useMutation<InitiativeInterface, Error, SaveInitiativeMutateInterface>({
         mutationFn: async ({ data, initiativeId, isEditMode }: SaveInitiativeMutateInterface) => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { progress, ...rest } = data;
-
             const payload = {
-                ...rest,
+                ...data,
                 startDate: new Date(data.startDate).toISOString(),
                 endDate: new Date(data.endDate).toISOString(),
             };
@@ -82,5 +79,14 @@ export const useDeleteInitiative = (): DeleteInitiativeMutationResult => {
                 old?.filter((initiative: InitiativeInterface) => initiative.id !== id) ?? []
             );
         },
+    });
+};
+
+export const useFetchInitiativeProgress = (initiativeId: string): UseQueryResult<{ progress: number }, Error> => {
+    return useQuery({
+        queryKey: ['initiative-progress', initiativeId],
+        queryFn: () => getInitiativeProgress(initiativeId),
+        staleTime: 1000 * 30,
+        refetchOnWindowFocus: false,
     });
 };

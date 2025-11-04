@@ -31,11 +31,8 @@ export const useSaveTask = (): UseMutationResult<TaskInterface, Error, SaveTaskM
         onSuccess: async (response: TaskInterface, { isEditMode, initiativeId }: SaveTaskMutateInterface) => {
             if (response) {
                 toast.success(`${response.name} task ${ isEditMode ? 'updated' : 'created' } successfully`);
-                queryClient.setQueryData<TaskInterface[]>(['tasks', initiativeId], (old: TaskInterface[] | undefined = []) => {
-                    const filtered = old.filter((task: TaskInterface) => task.id !== response.id);
-                    return [...filtered, response];
-                });
                 queryClient.invalidateQueries({ queryKey: ['tasks', initiativeId] });
+                queryClient.invalidateQueries({ queryKey: ['initiative-progress', initiativeId] });
             }
         },
         onError: (error: Error) => {
@@ -57,11 +54,10 @@ export const useDeleteTask = (): DeleteTaskMutationResult => {
             const normalized = normalizeError(error);
             toast.error(normalized.message);
         },
-        onSuccess: async (_: TaskInterface, { taskId, taskName, initiativeId }: DeleteTaskMutateInterface) => {
+        onSuccess: async (_: TaskInterface, { taskName, initiativeId }: DeleteTaskMutateInterface) => {
             toast.success(`${taskName} task deleted successfully`);
-            queryClient.setQueryData<TaskInterface[]>(['tasks', initiativeId], (old: TaskInterface[] | undefined) =>
-                old?.filter((task: TaskInterface) => task.id !== taskId) ?? []
-            );
+            queryClient.invalidateQueries({ queryKey: ['tasks', initiativeId] });
+            queryClient.invalidateQueries({ queryKey: ['initiative-progress', initiativeId] });
         },
     });
 };

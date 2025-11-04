@@ -9,9 +9,8 @@ export const CREATE_INITIATIVE_FORM_DEFAULT_VALUES: CreateInitiativeFormType = {
     name: '',
     description: '',
     startDate: formatDateToInputValue(today),
-    endDate: formatDateToInputValue(new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)),
+    endDate: '',
     status: 'Planned',
-    progress: 0,
 };
 
 const initiativeStatusOptions = initiativeStatusValues.map((status: InitiativeStatus) => ({
@@ -25,5 +24,4 @@ export const createInitiativeFormFields: FormFieldInterface<CreateInitiativeForm
     { name: 'startDate', label: 'Start Date' , type: 'date' },
     { name: 'endDate', label: 'End Date', type: 'date'  },
     { name: 'status', label: 'Status', type: 'select', selectOptions: initiativeStatusOptions },
-    { name: 'progress', label: 'Progress %', type: 'number', isReadOnly: true },
 ];
