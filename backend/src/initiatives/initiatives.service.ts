@@ -21,6 +21,7 @@ export class InitiativesService {
 
   async findAll() {
     return this.prisma.initiative.findMany({
+      orderBy: { name: 'asc' },
       include: { tasks: true },
     });
   }
