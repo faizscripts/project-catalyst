@@ -19,7 +19,7 @@ export class TasksService {
   async findByInitiative(initiativeId: string) {
     return this.prisma.task.findMany({
       where: { initiativeId },
-      orderBy: { dueDate: 'asc' },
+      orderBy: { name: 'asc' },
       include: { initiative: true },
     });
   }
