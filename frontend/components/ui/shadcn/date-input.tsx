@@ -45,7 +45,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 ref={combinedRef}
                 type="date"
                 onClick={handleClick}
-                className="pointer-events-auto"
+                className="pointer-events-auto w-full appearance-none text-sm leading-tight p-2"
                 {...props}
             />
         );

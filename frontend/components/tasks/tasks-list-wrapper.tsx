@@ -49,7 +49,7 @@ export default function TasksListWrapper({ initiative }: TasksListWrapperProps):
                 isFetchingProgress
                     ? <LoadingComponent />
                     : (
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-4">
                             <Progress value={ progressData?.progress } />
                             <span className="text-sm">{ progressData?.progress }%</span>
                         </div>
