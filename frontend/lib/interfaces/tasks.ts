@@ -1,3 +1,4 @@
+import type { CreateTaskFormType } from '@/types/form';
 import type { TaskStatus } from '@/types/tasks';
 
 export interface TaskInterface {
@@ -8,4 +9,11 @@ export interface TaskInterface {
     status: TaskStatus,
     completionPercentage: number,
     initiativeId: string,
+}
+
+export interface SaveTaskMutateInterface {
+    data: CreateTaskFormType,
+    initiativeId: string, 
+    isEditMode: boolean, 
+    taskId?: string,
 }

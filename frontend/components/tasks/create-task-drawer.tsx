@@ -26,8 +26,8 @@ export default function CreateTaskDrawer({ initiativeName, task, handleSubmit, i
         defaultValues: task ?? CREATE_TASK_FORM_DEFAULT_VALUES,
     });
     
-    const onSubmit = (data: CreateTaskFormType): void => {
-        handleSubmit(data);
+    const onSubmit = async (data: CreateTaskFormType): Promise<void> => {
+        await handleSubmit(data);
         setOpen(false);
     };
 
