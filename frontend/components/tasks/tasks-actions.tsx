@@ -3,7 +3,8 @@ import type { InitiativeInterface } from '@/interfaces/initiatives';
 import type { TaskInterface } from '@/interfaces/tasks';
 import type { CreateTaskFormType } from '@/types/form';
 import CreateTaskDrawer from '@/components/tasks/create-task-drawer';
-import { useSaveTask } from '@/hooks/tasks';
+import LoadingComponent from '@/components/ui/loading-component';
+import { useDeleteTask, useSaveTask } from '@/hooks/tasks';
 
 interface TasksActionsProps {
     initiative: InitiativeInterface;
@@ -14,8 +15,14 @@ export default function TasksActions({ initiative, task }: TasksActionsProps): R
 
     const saveTask = useSaveTask();
 
+    const deleteTask = useDeleteTask();
+
     const handleSubmit = async (data: CreateTaskFormType): Promise<void> => {
         await saveTask.mutateAsync({ data, initiativeId: initiative.id, isEditMode: true, taskId: task.id });
+    };
+    
+    const handleDelete = async (): Promise<void> => {
+        deleteTask.mutateAsync({ taskId: task.id, taskName: task.name, initiativeId: initiative.id });
     };
 
     return (
@@ -23,7 +30,11 @@ export default function TasksActions({ initiative, task }: TasksActionsProps): R
             <CreateTaskDrawer initiativeName={ initiative.name } task={ task } handleSubmit={ handleSubmit } isEditMode={ true }>
                 <Pencil className="text-primary hover:cursor-pointer"  />
             </CreateTaskDrawer>
-            <Trash2 className="text-destructive hover:cursor-pointer" />
+            { 
+                deleteTask.isPending 
+                    ? <LoadingComponent /> 
+                    : <Trash2 className="text-destructive hover:cursor-pointer" onClick={ handleDelete } />
+            }
         </div>
     );
 }
