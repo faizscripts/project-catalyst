@@ -1,7 +1,7 @@
 import { type UseMutationResult, type UseQueryResult, useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import type { SaveTaskMutateInterface, TaskInterface } from '@/interfaces/tasks';
-import { createTask, fetchTasksByInitiative, updateTask } from '@/api/tasks';
+import type { DeleteTaskMutateInterface, DeleteTaskMutationResult, SaveTaskMutateInterface, TaskInterface } from '@/interfaces/tasks';
+import { createTask, deleteTask, fetchTasksByInitiative, updateTask } from '@/api/tasks';
 import { normalizeError } from '@/utils/error';
 
 export const useFetchTasks = (initiativeId: string): UseQueryResult<TaskInterface[], Error> => {
@@ -41,6 +41,27 @@ export const useSaveTask = (): UseMutationResult<TaskInterface, Error, SaveTaskM
         onError: (error: Error) => {
             const normalized = normalizeError(error);
             toast.error(normalized.message);
+        },
+    });
+};
+
+export const useDeleteTask = (): DeleteTaskMutationResult => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async ({ taskId }: DeleteTaskMutateInterface) => await deleteTask(taskId),
+        onError: (error: Error, { initiativeId }: DeleteTaskMutateInterface, context: { previousTasks: TaskInterface[] | undefined } | undefined) => {
+            if (context?.previousTasks) {
+                queryClient.setQueryData(['tasks', initiativeId], context.previousTasks);
+            }
+            const normalized = normalizeError(error);
+            toast.error(normalized.message);
+        },
+        onSuccess: async (_: TaskInterface, { taskId, taskName, initiativeId }: DeleteTaskMutateInterface) => {
+            toast.success(`${taskName} task deleted successfully`);
+            queryClient.setQueryData<TaskInterface[]>(['tasks', initiativeId], (old: TaskInterface[] | undefined) =>
+                old?.filter((task: TaskInterface) => task.id !== taskId) ?? []
+            );
         },
     });
 };

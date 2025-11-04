@@ -1,5 +1,6 @@
 import type { CreateTaskFormType } from '@/types/form';
 import type { TaskStatus } from '@/types/tasks';
+import type { UseMutationResult } from '@tanstack/react-query';
 
 export interface TaskInterface {
     id: string,
@@ -17,3 +18,16 @@ export interface SaveTaskMutateInterface {
     isEditMode: boolean, 
     taskId?: string,
 }
+
+export interface DeleteTaskMutateInterface {
+    taskId: string;
+    taskName: string;
+    initiativeId: string;
+}
+
+export type DeleteTaskMutationResult = UseMutationResult<
+    TaskInterface,
+    Error,
+    DeleteTaskMutateInterface,
+    { previousTasks?: TaskInterface[] }
+>;
