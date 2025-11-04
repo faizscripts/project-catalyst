@@ -31,7 +31,7 @@ export default function InitiativesList(): React.JSX.Element {
 
     return (
         <div className="full-height gap-4 p-4">
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
                 <h2>Initiatives list page</h2>
                 <Link href="/initiatives/new">
                     <Button>Create new initiative</Button>

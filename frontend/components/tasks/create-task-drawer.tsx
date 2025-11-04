@@ -50,7 +50,7 @@ export default function CreateTaskDrawer({ initiativeName, task, handleSubmit, i
                         for <span className="font-semibold">{ initiativeName }</span> initiative
                     </DrawerDescription>
                 </DrawerHeader>
-                <div className="flex-center mb-8">
+                <div className="flex-center mb-8 p-4">
                     <Form
                         form={ form }
                         formFields={ createTaskFormFields }
