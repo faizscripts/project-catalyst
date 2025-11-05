@@ -42,21 +42,23 @@ export default function CreateTaskDrawer({ initiativeName, task, handleSubmit, i
                 { children }
             </DrawerTrigger>
             <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>
-                        { label } Task
-                    </DrawerTitle>
-                    <DrawerDescription>
-                        for <span className="font-semibold">{ initiativeName }</span> initiative
-                    </DrawerDescription>
-                </DrawerHeader>
-                <div className="flex-center mb-8 p-4">
-                    <Form
-                        form={ form }
-                        formFields={ createTaskFormFields }
-                        submitButtonLabel={ label }
-                        onSubmit={ onSubmit }
-                        onCancel={ () => setOpen(false) } />
+                <div className="max-h-[90dvh] overflow-y-auto px-4 pb-[env(safe-area-inset-bottom)] sm:pb-8">
+                    <DrawerHeader>
+                        <DrawerTitle>
+                            { label } Task
+                        </DrawerTitle>
+                        <DrawerDescription>
+                            for <span className="font-semibold">{ initiativeName }</span> initiative
+                        </DrawerDescription>
+                    </DrawerHeader>
+                    <div className="flex-center mb-8 p-4">
+                        <Form
+                            form={ form }
+                            formFields={ createTaskFormFields }
+                            submitButtonLabel={ label }
+                            onSubmit={ onSubmit }
+                            onCancel={ () => setOpen(false) } />
+                    </div>
                 </div>
             </DrawerContent>
         </Drawer>
